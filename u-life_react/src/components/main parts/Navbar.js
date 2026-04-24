@@ -15,7 +15,7 @@ function Navbar() {
       </div>        
 
       <ul className="navbar-links">
-        <li>Groups</li>
+        <li>Finances</li>
         <li>Productivity</li>
         <li>Opportunities</li>
         <li>Daily Habits</li>
