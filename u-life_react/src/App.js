@@ -1,13 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-import React from 'react';
-//import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from './components/main parts/Navbar';
+import React, { useState } from "react";
+import Login from "./components/pages/Login";
+import Signup from "./components/pages/Signup";
 
 function App() {
+  const [page, setPage] = useState("login");
+
   return (
     <div>
-      <Navbar />
+      <button onClick={() => setPage("login")}>Login</button>
+      <button onClick={() => setPage("signup")}>Signup</button>
+
+      {page === "login" ? (
+        <Login goToSignup={() => setPage("signup")} />
+      ) : (
+        <Signup />
+      )}
     </div>
   );
 }
