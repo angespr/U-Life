@@ -722,3 +722,268 @@
     flex-direction: column;
   }
 }
+
+.calendar-events-box {
+  margin-top: 16px;
+}
+
+.calendar-connected-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.calendar-connected-pill {
+  display: inline-block;
+  background: #edf4f8;
+  color: #151726;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 800;
+}
+
+.calendar-event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calendar-event-row {
+  background: #f8f9fb;
+  border: 1px solid #e3e6ec;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.calendar-event-row h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  color: #151726;
+}
+
+.calendar-event-row p {
+  margin: 0;
+  color: #4d5568;
+}
+
+.calendar-error {
+  color: #155c7a;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.timer-card {
+  height: fit-content;
+  min-height: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.timer-card h2 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.timer-display {
+  color: #669bbc;
+  font-size: 64px;
+  font-weight: 800;
+  margin: 20px 0 8px;
+  text-align: center;
+}
+
+.timer-card p {
+  margin: 0;
+  text-align: center;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 24px 0;
+  width: 100%;
+}
+
+.timer-controls button {
+  min-width: 90px;
+}
+
+.note-box {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  background: #f8f9fb;
+  border-radius: 12px;
+  padding: 18px;
+  color: #4d5568;
+}
+
+.productivity-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 26px;
+  align-items: start;
+}
+
+.feature-card {
+  height: fit-content;
+}
+
+.profile-card {
+  background: #ffffff;
+  border: 1px solid #e3e6ec;
+  border-radius: 18px;
+  padding: 34px;
+  box-shadow: 0 8px 22px rgba(21, 23, 38, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 720px;
+}
+
+.profile-avatar {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: #151726;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-info h2 {
+  margin: 4px 0 8px;
+  font-size: 30px;
+  color: #151726;
+}
+
+.profile-info p {
+  margin: 0;
+  color: #4d5568;
+}
+
+.profile-logout-btn {
+  border: none;
+  background: #669bbc;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 13px 18px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.profile-logout-btn:hover {
+  background: #4d83a3;
+}
+
+@media (max-width: 750px) {
+  .profile-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-logout-btn {
+    width: 100%;
+  }
+}
+
+/* ===== Global 3D Card Shadow (applies to ALL modules) ===== */
+
+.feature-card,
+.module-card,
+.finance-group-card,
+.profile-card,
+.selected-finance-header,
+.calendar-box,
+.calendar-events-box {
+  box-shadow: 
+    0 8px 18px rgba(21, 23, 38, 0.06),
+    0 2px 6px rgba(21, 23, 38, 0.04);
+  transition: all 0.2s ease;
+}
+
+/* Hover lift effect */
+.feature-card:hover,
+.module-card:hover,
+.finance-group-card:hover,
+.profile-card:hover,
+.selected-finance-header:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 14px 28px rgba(21, 23, 38, 0.10),
+    0 6px 12px rgba(21, 23, 38, 0.06);
+}
+
+/* Subtle inner element elevation */
+
+.task-row,
+.expense-row,
+.calendar-event-row {
+  box-shadow: 
+    0 2px 6px rgba(21, 23, 38, 0.04);
+}
+
+.mood-option,
+.counter-btn,
+.pin-btn {
+  transition: all 0.15s ease;
+}
+
+.mood-option:hover,
+.counter-btn:hover,
+.pin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(21, 23, 38, 0.08);
+}
+
+/* Delete X buttons for modules */
+.delete-module-btn,
+.delete-saved-btn {
+  border: none;
+  background: transparent;
+  color: #ef8354;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  line-height: 1;
+}
+
+.delete-module-btn:hover,
+.delete-saved-btn:hover {
+  background: #fff2ec;
+  transform: translateY(-1px);
+}
+
+.saved-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.finance-group-card {
+  position: relative;
+}
+
+.finance-group-card .card-actions {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+}
