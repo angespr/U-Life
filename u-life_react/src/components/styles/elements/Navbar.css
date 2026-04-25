@@ -58,3 +58,14 @@
 .navbar-btn:hover {
   transform: scale(1.05);
 }
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-user-name {
+  color: white;
+  font-weight: 600;
+}
