@@ -3,15 +3,13 @@
   display: flex;
   align-items: center;
 
-  margin: 20px auto;
+  margin: 20px auto 20px auto;
   padding: 14px 28px;
 
   width: calc(100% - 60px);
   max-width: 1300px;
 
   background: #151726;
-  color: white;
-
   border-radius: 20px;
 
   box-shadow:
