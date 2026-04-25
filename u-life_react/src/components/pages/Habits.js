@@ -83,7 +83,7 @@ function HabitModal({ onClose, onCreate }) {
   );
 }
 
-function HabitModule({ module, onUpdate, onTogglePin }) {
+function HabitModule({ module, onUpdate, onTogglePin, onDelete }) {
   const [input, setInput] = useState("");
 
   const completed = useMemo(() => {
@@ -116,11 +116,21 @@ function HabitModule({ module, onUpdate, onTogglePin }) {
   return (
     <section className="feature-card">
       <div className="card-heading-row">
-        <h2>{module.name}</h2>
-        <button className={module.pinned ? "pin-btn pinned" : "pin-btn"} onClick={onTogglePin}>
-          {module.pinned ? "📌 Pinned" : "📍 Pin"}
-        </button>
-      </div>
+          <h2>{module.name}</h2>
+
+          <div className="card-actions">
+            <button
+              className={module.pinned ? "pin-btn pinned" : "pin-btn"}
+              onClick={onTogglePin}
+            >
+              {module.pinned ? "📌 Pinned" : "📍 Pin"}
+            </button>
+
+            <button className="delete-module-btn" onClick={onDelete}>
+              ×
+            </button>
+          </div>
+        </div>
 
       {module.type === "mood" && (
         <>
@@ -219,6 +229,10 @@ function Habits() {
     saveModules(data.habitModules.map((module) => module.id === id ? { ...module, pinned: !module.pinned } : module));
   };
 
+  const deleteModule = (id) => {
+    saveModules(data.habitModules.filter((module) => module.id !== id));
+  };
+
   return (
     <PageStyle>
       <div className="page-title-row">
@@ -238,6 +252,7 @@ function Habits() {
             module={module}
             onUpdate={updateModule}
             onTogglePin={() => togglePin(module.id)}
+            onDelete={() => deleteModule(module.id)}
           />
         ))}
       </div>

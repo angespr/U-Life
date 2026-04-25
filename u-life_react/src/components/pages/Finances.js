@@ -405,6 +405,22 @@ function Finances() {
     navigate("/finances");
   };
 
+  const deleteFinanceGroup = (id) => {
+    const remainingGroups = data.financeGroups.filter((group) => group.id !== id);
+
+    const updated = {
+      ...data,
+      financeGroups: remainingGroups,
+    };
+
+    saveULifeData(updated);
+    setData(updated);
+
+    if (selectedGroupId === id) {
+      setSelectedGroupId(remainingGroups[0]?.id || null);
+    }
+  };
+
   return (
     <PageStyle>
       <div className="page-title-row">
@@ -429,7 +445,10 @@ function Finances() {
             <div className="finance-group-grid">
               {data.financeGroups.map((group) => (
                 <article key={group.id} className="finance-group-card">
-                  <button className="finance-card-main" onClick={() => openGroup(group.id)}>
+                  <button
+                    className="finance-card-main"
+                    onClick={() => openGroup(group.id)}
+                  >
                     <div className="finance-group-icon">$</div>
 
                     <div>
@@ -439,12 +458,24 @@ function Finances() {
                     </div>
                   </button>
 
-                  <button
-                    className={group.pinned ? "pin-btn pinned finance-pin" : "pin-btn finance-pin"}
-                    onClick={() => togglePin(group.id)}
-                  >
-                    {group.pinned ? "📌 Pinned" : "📍 Pin"}
-                  </button>
+                  <div className="card-actions">
+                    <button
+                      className={group.pinned ? "pin-btn pinned finance-pin" : "pin-btn finance-pin"}
+                      onClick={() => togglePin(group.id)}
+                    >
+                      {group.pinned ? "📌 Pinned" : "📍 Pin"}
+                    </button>
+
+                    <button
+                      className="delete-module-btn"
+                      onClick={(e) => {
+                        e.stopPropagation(); // 🚨 VERY IMPORTANT
+                        deleteFinanceGroup(group.id);
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
                 </article>
               ))}
 

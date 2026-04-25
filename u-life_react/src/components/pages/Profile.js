@@ -5,9 +5,13 @@ import "../styles/pages/FeaturePages.css";
 
 function Profile() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
-  const logout = () => {
+  const name = user.name || "User";
+  const email = user.email || "No email saved";
+  const initial = name.charAt(0).toUpperCase();
+
+  const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
@@ -22,17 +26,16 @@ function Profile() {
         </div>
       </div>
 
-      <section className="feature-card profile-card">
-        <div className="profile-avatar">
-          {(user?.name || user?.email || "U").charAt(0).toUpperCase()}
+      <section className="profile-card">
+        <div className="profile-avatar">{initial}</div>
+
+        <div className="profile-info">
+          <p className="eyebrow">Account</p>
+          <h2>{name}</h2>
+          <p>{email}</p>
         </div>
 
-        <div>
-          <h2>{user?.name || "U-Life User"}</h2>
-          <p>{user?.email || "No email saved"}</p>
-        </div>
-
-        <button className="danger-button" onClick={logout}>
+        <button className="profile-logout-btn" onClick={handleLogout}>
           Log Out
         </button>
       </section>
