@@ -5,12 +5,16 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
 
+const googleCalendarRoutes = require("./routes/googleCalendar");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/google/calendar", googleCalendarRoutes);
 
 app.get("/", (req, res) => {
   res.send("U-Life backend is running.");
