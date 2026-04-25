@@ -78,6 +78,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import "../styles/startup/Login&Signup.css"
+import Logo from "../../assets/logo2.png"
 
 function Signup() {
   const navigate = useNavigate();
@@ -124,12 +126,15 @@ function Signup() {
     }
   };
 
-  return (
+return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1>Create Account</h1>
 
-        <form onSubmit={handleSignup}>
+        <img src={Logo} alt="Logo" className="auth-logo" />
+
+        <h2 className="auth-title">Create Account</h2>
+
+        <form onSubmit={handleSignup} className="auth-form">
           <input
             name="name"
             placeholder="Name"
@@ -152,14 +157,17 @@ function Signup() {
             onChange={handleChange}
           />
 
-          <button type="submit">Sign Up</button>
+          <button type="submit" className="primary-btn signup-btn">
+            Sign Up
+          </button>
         </form>
 
-        {message && <p>{message}</p>}
+        {message && <p className="auth-message">{message}</p>}
 
         <p>
           Already have an account? <Link to="/login">Login</Link>
         </p>
+
       </div>
     </div>
   );
