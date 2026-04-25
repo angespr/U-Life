@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../styles/startup/Login&Signup.css"
+import Logo from "../../assets/logo.png"
 
 function Signup() {
   const [formData, setFormData] = useState({
