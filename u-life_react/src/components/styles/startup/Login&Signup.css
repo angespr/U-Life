@@ -44,17 +44,6 @@
   border-color: #669BBC;
 }
 
-.auth-form button {
-  margin-top: 10px;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #669BBC;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 .auth-message {
   margin-top: 12px;
   font-size: 14px;

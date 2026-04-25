@@ -63,7 +63,6 @@ function Login({ goToSignup }) {
             onChange={handleChange}
           />
 
-          {/* Steel Blue button */}
           <button type="submit" className="primary-btn login-btn">
             Login
           </button>
