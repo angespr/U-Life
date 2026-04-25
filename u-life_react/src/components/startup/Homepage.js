@@ -6,13 +6,15 @@ function Homepage() {
   return (
     <div className="home-container">
       <div className="home-card">
-        <h2 className="welcome-text">Welcome to</h2>
+        <h2 className="welcome-text">Welcome to:</h2>
 
         <img
           src={Logo}
           alt="Logo"
           className="home-logo"
         />
+
+        <h3 className="message-text">Helping students manage life, deadlines, and everything in between!</h3>
 
         <div className="home-buttons">
           <a href="/login" className="btn login-btn">Login</a>
