@@ -44,9 +44,3 @@ Plan your job search
 - Browse job boards links
 - Track you job applications
 - Store and organize resumes and cover letters
-
-#### Groups
-Collaborate with other U-Life users
-- Share budgets
-- Sync homework trackers
-- Plan trips together
