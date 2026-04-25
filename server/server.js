@@ -17,16 +17,17 @@ app.get("/", (req, res) => {
 });
 
 //start up the server first
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-//now connect to mongodb (non-blocking)
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB");
+
+    const PORT = process.env.PORT || 5000;
+
+    //now connect to mongodb (non-blocking)
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   })
   .catch((error) => {
     console.error("MongoDB connection error:", error);
