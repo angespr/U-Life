@@ -3,7 +3,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff;
+    background: linear-gradient(
+    270deg,
+    #7F9172,
+    #669BBC,
+    #EF8354
+  );
+  background-size: 600% 600%;
+  animation: gradientMove 12s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .home-card {

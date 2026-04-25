@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../styles/startup/Login&Signup.css"
-import Logo from "../../assets/logo.png"
+import Logo from "../../assets/logo2.png"
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -32,37 +32,43 @@ function Signup() {
     }
   };
 
-  return (
-    <div>
-      <h1>Create Account</h1>
+return (
+    <div className="auth-page">
+      <div className="auth-card">
 
-      <form onSubmit={handleSignup}>
-        <input
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+        <img src={Logo} alt="Logo" className="auth-logo" />
+        <h2 className="auth-title">Create Account</h2>
 
-        <input
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <form onSubmit={handleSignup} className="auth-form">
+          <input
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleChange}
+          />
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+          <input
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+          />
 
-        <button type="submit">Sign Up</button>
-      </form>
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+        
+          <button type="submit" className="primary-btn signup-btn">
+            Sign Up
+          </button>
+        </form>
 
-      <p>{message}</p>
+        <p className="auth-message">{message}</p>
+      </div>
     </div>
   );
 }

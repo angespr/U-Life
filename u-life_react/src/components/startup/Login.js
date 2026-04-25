@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../styles/startup/Login&Signup.css"
-import Logo from "../../assets/logo.png"
+import Logo from "../../assets/logo2.png"
 
 function Login({ goToSignup }) {
   const [formData, setFormData] = useState({
@@ -39,36 +39,44 @@ function Login({ goToSignup }) {
     }
   };
 
+
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="auth-page">
+      <div className="auth-card">
 
-      <form onSubmit={handleLogin}>
-        <input
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <img src={Logo} alt="Logo" className="auth-logo" />
+        <h2 className="auth-title">Login</h2>
 
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+        <form onSubmit={handleLogin} className="auth-form">
+          <input
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+          />
 
-        <button type="submit">Login</button>
-      </form>
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          />
 
-      <p>{message}</p>
+          {/* Steel Blue button */}
+          <button type="submit" className="primary-btn login-btn">
+            Login
+          </button>
+        </form>
 
-      {showSignupButton && (
-        <button onClick={goToSignup}>
-          Create an account
-        </button>
-      )}
+        <p className="auth-message">{message}</p>
+
+        {showSignupButton && (
+          <button onClick={goToSignup} className="secondary-btn">
+            Create an account
+          </button>
+        )}
+      </div>
     </div>
   );
 }
