@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/U-Life/static/css/main.f8c7d09c.css",
-    "main.js": "/U-Life/static/js/main.d72c5fb6.js",
+    "main.js": "/U-Life/static/js/main.5e506335.js",
     "static/js/453.25f6144e.chunk.js": "/U-Life/static/js/453.25f6144e.chunk.js",
     "static/media/logo.png": "/U-Life/static/media/logo.4c959731846482b5d68a.png",
     "static/media/logo2.png": "/U-Life/static/media/logo2.6398d1df8d7fdf169f86.png",
     "index.html": "/U-Life/index.html",
     "main.f8c7d09c.css.map": "/U-Life/static/css/main.f8c7d09c.css.map",
-    "main.d72c5fb6.js.map": "/U-Life/static/js/main.d72c5fb6.js.map",
+    "main.5e506335.js.map": "/U-Life/static/js/main.5e506335.js.map",
     "453.25f6144e.chunk.js.map": "/U-Life/static/js/453.25f6144e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f8c7d09c.css",
-    "static/js/main.d72c5fb6.js"
+    "static/js/main.5e506335.js"
   ]
 }
