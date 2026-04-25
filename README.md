@@ -1,8 +1,9 @@
 # U-Life
 UWB Hackathon 2026: The Future!
-presentation and figma
+presentation and Figma
 
 # Inspiration
+Our inspiration came from our own experiences as students. We noticed how overwhelming college life can be when everything is spread across different platforms. We wanted to create a single space that brings all these important parts together, making it easier for students to stay organized and move closer to their goals.
 
 # Figma
 Created an illustrative demo by using Figma. Our prompt to Figma was "create a comprehensive college app with the four pages" and
