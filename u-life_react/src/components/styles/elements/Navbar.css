@@ -2,7 +2,6 @@
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   margin: 20px auto;
   padding: 14px 28px;
@@ -10,7 +9,7 @@
   width: calc(100% - 60px);
   max-width: 1300px;
 
-  background: #151726; /* Jet Black */
+  background: #151726;
   color: white;
 
   border-radius: 20px;
@@ -22,6 +21,8 @@
   position: sticky;
   top: 10px;
   z-index: 100;
+
+  justify-content: flex-start; 
 }
 
 /* Logo */
@@ -44,6 +45,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-left: 20px; 
 }
 
 /* Individual link */
@@ -70,7 +72,7 @@
 
 /* 🔥 ACTIVE TAB (UPDATED TO ORANGE) */
 .nav-link.active {
-  background: linear-gradient(135deg, #EF8354, #f4a261);
+  background: #669bbc;
   color: white;
   font-weight: 700;
 
@@ -81,6 +83,7 @@
 
 /* Right side */
 .navbar-user {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -103,7 +106,7 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Logout button */
+/* Logout button*/
 .navbar-btn {
   background: white;
   color: #151726;
