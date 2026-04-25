@@ -4,13 +4,21 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
+const googleCalendarRoutes = require("./routes/googleCalendar");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:5173"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/google/calendar", googleCalendarRoutes);
 
 app.get("/", (req, res) => {
   res.send("U-Life backend is running.");
@@ -21,8 +29,10 @@ mongoose
   .then(() => {
     console.log("Connected to MongoDB");
 
-    app.listen(process.env.PORT, () => {
-      console.log(`Server running on port ${process.env.PORT}`);
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {
