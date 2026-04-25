@@ -3,7 +3,7 @@ import PageStyle from "../main parts/PageStyle";
 import { loadULifeData, saveULifeData } from "../../data/ulifeStore";
 import "../styles/pages/FeaturePages.css";
 
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = process.env.REACT_APP_API_URL;
 
 function ModuleModal({ onClose, onCreate }) {
   const [name, setName] = useState("");
