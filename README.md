@@ -51,14 +51,14 @@ Plan your job search
 ### Inspiration
 Our inspiration came from our own experiences as students. We noticed how overwhelming college life can be when everything is spread across different platforms. We wanted to create a single space that brings all these important parts together, making it easier for students to stay organized and move closer to their goals.
 
-# Challenges we ran into
+### Challenges we ran into
 - Integrating external features such as Google Calendar
 - Changing pinned modules on the homepage
 
-# Accomplishments that we're proud of: 
+### Accomplishments that we're proud of: 
 - Creating a functioning Login/SignUp page
 - Various tools and features
 
-# What we learned
+### What we learned
 - Properly integrating external feature to have full functionality can be frustrating
 - Live deployment can be difficult, especially when not sure which service is best to use
