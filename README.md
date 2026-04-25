@@ -12,7 +12,8 @@ U-Life was created April 24th-26th as a part of the UWB Hackathon 2026: The Futu
 
 ### Tech Stack
 - React.js
-- Backend stuff
+- CSS
+- MongoDB
 
 ### How to use?
 Up to you! Many of the features are customizable. While primarily meant for college students, U-Life can be used by all!
