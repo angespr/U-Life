@@ -11,9 +11,12 @@ U-Life was created April 24th-26th as a part of the UWB Hackathon 2026: The Futu
 - Opportunity: job board links, job application tracker, resume and cover letter hub.
 
 ### Tech Stack
-- React.js
-- CSS
-- MongoDB
+- React.js: used for front-end development, building component-based user interfaces for a more seamless experience.
+- CSS: used for styling and layout design.
+- MongoDB: used for storing and managing data.
+
+#### Other Tools
+Figma was used to create a user flow diagram.
 
 ### How to use?
 Up to you! Many of the features are customizable. While primarily meant for college students, U-Life can be used by all!
@@ -44,3 +47,18 @@ Plan your job search
 - Browse job boards links
 - Track you job applications
 - Store and organize resumes and cover letters
+
+### Inspiration
+Our inspiration came from our own experiences as students. We noticed how overwhelming college life can be when everything is spread across different platforms. We wanted to create a single space that brings all these important parts together, making it easier for students to stay organized and move closer to their goals.
+
+# Challenges we ran into
+- Integrating external features such as Google Calendar
+- Changing pinned modules on the homepage
+
+# Accomplishments that we're proud of: 
+- Creating a functioning Login/SignUp page
+- Various tools and features
+
+# What we learned
+- Properly integrating external feature to have full functionality can be frustrating
+- Live deployment can be difficult, especially when not sure which service is best to use
