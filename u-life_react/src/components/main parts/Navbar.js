@@ -31,9 +31,7 @@ function Navbar() {
           <NavLink
             key={link.to}
             to={link.to}
-            className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link"
-            }
+            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
           >
             <span>{link.icon}</span>
             {link.label}
@@ -45,9 +43,7 @@ function Navbar() {
         <NavLink to="/profile" className="profile-pill">
           {user?.name || "Profile"}
         </NavLink>
-        <button className="navbar-btn" onClick={handleLogout}>
-          Logout
-        </button>
+        <button className="navbar-btn" onClick={handleLogout}>Logout</button>
       </div>
     </nav>
   );
