@@ -2,16 +2,11 @@ import React from "react";
 import Navbar from "./Navbar";
 import "../styles/pages/PageStyle.css";
 
-// helps contain navbar across all pages user is on
-function PageStyle({ children }) {
+export default function PageStyle({ children }) {
   return (
-    <>
+    <div className="app-shell">
       <Navbar />
-      <div className="page-container">
-        {children}
-      </div>
-    </>
+      <main className="page-container">{children}</main>
+    </div>
   );
 }
-
-export default PageStyle;

@@ -1,95 +1,70 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import PageStyle from "./PageStyle";
 import "../styles/pages/Dashboard.css";
-import Navbar from "./Navbar";
-
-// tester modules before actual user ones
-const initialModules = [
-  { id: 1, label: "Task HW", link: "#taskhw" },
-  { id: 2, label: "Task Eat Food", link: "#taskeatfood" },
-  { id: 3, label: "Task Do XYZ", link: "#taskdoxyz" },
-  { id: 4, label: "Task blah blah", link: "#taskblahblah" },
-];
 
 function Dashboard() {
-  const [modules, setModules] = useState(initialModules);
-  const [productivity, setProductivity] = useState([1, 2]);
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const navigate = useNavigate();
 
-  const getModule = (id) => modules.find(m => m.id === id);
-
-  const availableModules = modules.filter(m => !productivity.includes(m.id));
-
-  const addToProductivity = (id) => {
-    setProductivity(prev => [...prev, id]);
-    setOpenDropdown(false);
-  };
-
-  const removeFromProductivity = (id) => {
-    setProductivity(prev => prev.filter(mid => mid !== id));
-  };
+  const modules = [
+    {
+      title: "Productivity",
+      description: "Homework, to-do lists, calendar, and Pomodoro timer.",
+      path: "/productivity",
+      icon: "☑️",
+    },
+    {
+      title: "Opportunities",
+      description: "Job search links, saved opportunities, and career actions.",
+      path: "/opportunities",
+      icon: "💼",
+    },
+    {
+      title: "Habits",
+      description: "Mental health, water intake, exercise, and custom habits.",
+      path: "/habits",
+      icon: "♡",
+    },
+    {
+      title: "Finances",
+      description: "Budget groups, roommate expenses, goals, and money trends.",
+      path: "/finances",
+      icon: "$",
+    },
+  ];
 
   return (
-    <>
-      <Navbar />
+    <PageStyle>
+      <section className="dashboard-hero">
+        <div>
+          <p className="eyebrow">Welcome back</p>
+          <h1>Main Dashboard</h1>
+          <p>
+            Your central hub for productivity, opportunities, habits, and shared
+            student finances.
+          </p>
+        </div>
+      </section>
 
-      <div className="dashboard-container">
+      <section className="dashboard-section">
+        <h2>Pinned Modules</h2>
 
-        <div className="section-header">
-
-          <div className="title-row">
-            <h2 className="section-title">Productivity</h2>
-
+        <div className="module-grid">
+          {modules.map((module) => (
             <button
-              className="add-btn"
-              onClick={() => setOpenDropdown(prev => !prev)}
+              key={module.title}
+              className="module-card"
+              onClick={() => navigate(module.path)}
             >
-              +
+              <div className="module-icon">{module.icon}</div>
+              <h3>{module.title}</h3>
+              <p>{module.description}</p>
+              <span>Open →</span>
             </button>
-          </div>
-
-          {openDropdown && (
-            <div className="dropdown">
-              {availableModules.length === 0 && (
-                <div className="dropdown-item">No modules left</div>
-              )}
-
-              {availableModules.map(mod => (
-                <div
-                  key={mod.id}
-                  className="dropdown-item"
-                  onClick={() => addToProductivity(mod.id)}
-                >
-                  {mod.label}
-                </div>
-              ))}
-            </div>
-          )}
+          ))}
         </div>
-
-        <div className="grid">
-          {productivity.map(id => {
-            const mod = getModule(id);
-            if (!mod) return null;
-
-            return (
-              <a key={id} href={mod.link} className="card">
-                <span>{mod.label}</span>
-                <button
-                  className="pin-btn active"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    removeFromProductivity(id);
-                  }}
-                >
-                  ×
-                </button>
-              </a>
-            );
-          })}
-        </div>
-
-      </div>
-    </>
+      </section>
+    </PageStyle>
   );
 }
 
