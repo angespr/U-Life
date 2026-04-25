@@ -1,46 +1,11 @@
-// import React from "react";
-// import "../styles/elements/Navbar.css";
-// import Logo from "../../assets/logo.png"
-
-// function Navbar() {
-//   return (
-//     <nav className="navbar">
-
-//       <div className="navbar-left">
-//         <img
-//           src={Logo}
-//           alt="Logo"
-//           className="logo header-img"
-//           width="120"
-//         />
-
-//         <ul className="navbar-links">
-//           <li>Finances</li>
-//           <li>Productivity</li>
-//           <li>Opportunities</li>
-//           <li>Daily Habits</li>
-//         </ul>
-//       </div>
-
-//       <button className="navbar-btn">
-//         Profile
-//       </button>
-
-//     </nav>
-//   );
-// }
-
-// export default Navbar; 
-
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/elements/Navbar.css";
 import Logo from "../../assets/logo.png";
 
 function Navbar() {
   const navigate = useNavigate();
-
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -48,27 +13,38 @@ function Navbar() {
     navigate("/login");
   };
 
+  const links = [
+    { to: "/productivity", label: "Productivity", icon: "☑️" },
+    { to: "/opportunities", label: "Opportunities", icon: "💼" },
+    { to: "/habits", label: "Habits", icon: "♡" },
+    { to: "/finances", label: "Finances", icon: "$" },
+  ];
+
   return (
     <nav className="navbar">
-      <div className="header-left">
-        <img
-          src={Logo}
-          alt="Logo"
-          className="logo header-img"
-          width="120"
-        />
+      <button className="navbar-brand" onClick={() => navigate("/dashboard")}>
+        <img src={Logo} alt="U-Life logo" className="navbar-logo-img" />
+      </button>
+
+      <div className="navbar-links">
+        {links.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
+            <span>{link.icon}</span>
+            {link.label}
+          </NavLink>
+        ))}
       </div>
 
-      <ul className="navbar-links">
-        <li>Finances</li>
-        <li>Productivity</li>
-        <li>Opportunities</li>
-        <li>Daily Habits</li>
-      </ul>
-
       <div className="navbar-user">
-        {user && <span className="navbar-user-name">Hi, {user.name}</span>}
-
+        <NavLink to="/profile" className="profile-pill">
+          {user?.name || "Profile"}
+        </NavLink>
         <button className="navbar-btn" onClick={handleLogout}>
           Logout
         </button>

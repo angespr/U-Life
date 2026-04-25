@@ -1,8 +1,43 @@
-.page-container {
+.app-shell {
   min-height: 100vh;
-  padding-top: 80px; 
-  padding-left: 32px;
-  padding-right: 32px;
-  background: #f6f5f2;
-  box-sizing: border-box;
+  background: #f7f8fb;
+  color: #151726;
+}
+
+.page-container {
+  padding: 36px 50px;
+}
+
+.page-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.page-title-row h1 {
+  margin: 0;
+  font-size: 34px;
+  color: #151726;
+}
+
+.page-title-row p {
+  margin: 8px 0 0;
+  color: #4d5568;
+  font-size: 16px;
+}
+
+.primary-action {
+  border: none;
+  background: #669bbc;
+  color: #ffffff;
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-action:hover {
+  background: #4d83a3;
 }
