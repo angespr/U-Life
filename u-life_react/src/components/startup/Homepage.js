@@ -14,7 +14,9 @@ function Homepage() {
           className="home-logo"
         />
 
-        <h3 className="message-text">Helping students manage life, deadlines, and everything in between!</h3>
+        <h3 className="message-text">
+          Helping students manage life, deadlines, and everything in between!
+        </h3>
 
         <div className="home-buttons">
           <a href="/login" className="btn login-btn">Login</a>
