@@ -3,4 +3,8 @@ u-life_react/.env
 
 node_modules/
 server/node_modules/
+u-life_react/node_modules/server/.env
+u-life_react/.env
+node_modules/
+server/node_modules/
 u-life_react/node_modules/
