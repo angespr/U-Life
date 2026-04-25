@@ -14,8 +14,8 @@ function Navbar() {
   };
 
   const links = [
-    { to: "/productivity", label: "Productivity", icon: "☑️" },
-    { to: "/opportunities", label: "Opportunities", icon: "💼" },
+    { to: "/productivity", label: "Productivity", icon: "☆" },
+    { to: "/opportunities", label: "Opportunities", icon: "⚛" },
     { to: "/habits", label: "Habits", icon: "♡" },
     { to: "/finances", label: "Finances", icon: "$" },
   ];
