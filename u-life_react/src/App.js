@@ -1,27 +1,22 @@
 import React, { useState } from "react";
-import Login from "./components/pages/Login";
-import Signup from "./components/pages/Signup";
-import Navbar from "./components/main parts/Navbar"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Homepage from "./components/startup/Homepage";
+import Login from "./components/startup/Login";
+import Signup from "./components/startup/Signup";
+import Dashboard from "./components/main parts/Dashboard";
 
 function App() {
-  const [page, setPage] = useState("login");
-
   return (
-    <div>
-      
-      <Navbar />
+    <Router>
+      <Routes>
 
-      <button onClick={() => setPage("login")}>Login</button>
-      <button onClick={() => setPage("signup")}>Signup</button>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
-      {page === "login" ? (
-        <Login goToSignup={() => setPage("signup")} />
-      ) : (
-        <Signup />
-      )}
-
-
-    </div>
+      </Routes>
+    </Router>
   );
 }
 
