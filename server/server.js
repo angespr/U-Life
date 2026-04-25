@@ -16,14 +16,17 @@ app.get("/", (req, res) => {
   res.send("U-Life backend is running.");
 });
 
+//start up the server first
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+//now connect to mongodb (non-blocking)
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to MongoDB");
-
-    app.listen(process.env.PORT, () => {
-      console.log(`Server running on port ${process.env.PORT}`);
-    });
   })
   .catch((error) => {
     console.error("MongoDB connection error:", error);

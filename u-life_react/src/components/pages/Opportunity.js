@@ -56,11 +56,26 @@ function Opportunity() {
   const [data, setData] = useState(loadULifeData());
   const [showModal, setShowModal] = useState(false);
 
-  const saved = [
-    { role: "Software Engineering Intern", company: "Tech Company Inc.", location: "Remote", status: "Applied" },
-    { role: "Product Manager Intern", company: "Startup XYZ", location: "San Francisco, CA", status: "Saved" },
-    { role: "Data Analyst Co-op", company: "Finance Corp", location: "New York, NY", status: "Interview" },
-  ];
+  const [saved, setSaved] = useState([
+    {
+      role: "Software Engineering Intern",
+      company: "Tech Company Inc.",
+      location: "Remote",
+      status: "Applied",
+    },
+    {
+      role: "Product Manager Intern",
+      company: "Startup XYZ",
+      location: "San Francisco, CA",
+      status: "Saved",
+    },
+    {
+      role: "Data Analyst Co-op",
+      company: "Finance Corp",
+      location: "New York, NY",
+      status: "Interview",
+    },
+  ]);
 
   const saveResources = (resources) => {
     const updated = { ...data, opportunityModules: resources };
@@ -69,6 +84,14 @@ function Opportunity() {
   };
 
   const addResource = (resource) => saveResources([...data.opportunityModules, resource]);
+
+  const deleteResource = (id) => {
+    saveResources(data.opportunityModules.filter((resource) => resource.id !== id));
+  };
+
+  const deleteSavedOpportunity = (role) => {
+    setSaved(saved.filter((item) => item.role !== role));
+  };
 
   const togglePin = (id) => {
     saveResources(
@@ -105,6 +128,14 @@ function Opportunity() {
                 >
                   {resource.pinned ? "📌" : "📍"}
                 </button>
+                
+                <button
+                  className="delete-module-btn"
+                  onClick={() => deleteResource(resource.id)}
+                >
+                  ×
+                </button>
+
                 <a href={resource.url} target="_blank" rel="noreferrer" className="external-icon">
                   ↗
                 </a>
@@ -146,9 +177,19 @@ function Opportunity() {
                 <h3>{item.role}</h3>
                 <p>{item.company} • {item.location}</p>
               </div>
-              <span className={`status-pill ${item.status.toLowerCase()}`}>
-                {item.status}
-              </span>
+
+              <div className="saved-actions">
+                <span className={`status-pill ${item.status.toLowerCase()}`}>
+                  {item.status}
+                </span>
+
+                <button
+                  className="delete-saved-btn"
+                  onClick={() => deleteSavedOpportunity(item.role)}
+                >
+                  ×
+                </button>
+              </div>
             </div>
           ))}
         </div>
