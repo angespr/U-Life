@@ -108,6 +108,7 @@ export const DEFAULT_ULIFE_DATA = {
       ],
     },
   ],
+  resumes: [],
 };
 
 export function loadULifeData() {
@@ -118,7 +119,17 @@ export function loadULifeData() {
     return DEFAULT_ULIFE_DATA;
   }
 
-  return JSON.parse(saved);
+  const parsed = JSON.parse(saved);
+
+  return {
+    ...DEFAULT_ULIFE_DATA,
+    ...parsed,
+    productivityModules: parsed.productivityModules || DEFAULT_ULIFE_DATA.productivityModules,
+    opportunityModules: parsed.opportunityModules || DEFAULT_ULIFE_DATA.opportunityModules,
+    habitModules: parsed.habitModules || DEFAULT_ULIFE_DATA.habitModules,
+    financeGroups: parsed.financeGroups || DEFAULT_ULIFE_DATA.financeGroups,
+    resumes: parsed.resumes || [],
+  };
 }
 
 export function saveULifeData(data) {
