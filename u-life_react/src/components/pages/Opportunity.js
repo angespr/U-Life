@@ -23,6 +23,34 @@ function getLogoUrl(url) {
   return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 }
 
+function openResumePreview(resume) {
+  if (!resume?.fileData) return;
+
+  try {
+    const [header, base64Data] = resume.fileData.split(",");
+    const mimeType =
+      header?.match(/data:(.*);base64/)?.[1] ||
+      resume.fileType ||
+      "application/pdf";
+
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: mimeType });
+    const blobUrl = URL.createObjectURL(blob);
+
+    window.open(blobUrl, "_blank", "noopener,noreferrer");
+  } catch (error) {
+    console.error("Resume preview failed:", error);
+    alert("Could not preview this file. Please try downloading it instead.");
+  }
+}
+
 function ResourceLogo({ resource }) {
   const logo = getLogoUrl(resource.url);
 
@@ -141,7 +169,7 @@ function ResumeModal({ resume, onClose, onSave }) {
     if (!file) return;
 
     setFileName(file.name);
-    setFileType(file.type);
+    setFileType(file.type || "application/pdf");
 
     const reader = new FileReader();
     reader.onload = () => setFileData(reader.result);
@@ -193,7 +221,7 @@ function ResumeModal({ resume, onClose, onSave }) {
         <label>Upload resume file</label>
         <input
           type="file"
-          accept=".pdf,.doc,.docx"
+          accept=".pdf,application/pdf,.doc,.docx"
           onChange={handleFileUpload}
         />
 
@@ -265,16 +293,18 @@ function Opportunity() {
   };
 
   const addResource = (resource) => {
-    saveResources([...data.opportunityModules, resource]);
+    saveResources([...(data.opportunityModules || []), resource]);
   };
 
   const deleteResource = (id) => {
-    saveResources(data.opportunityModules.filter((resource) => resource.id !== id));
+    saveResources(
+      (data.opportunityModules || []).filter((resource) => resource.id !== id)
+    );
   };
 
   const togglePin = (id) => {
     saveResources(
-      data.opportunityModules.map((resource) =>
+      (data.opportunityModules || []).map((resource) =>
         resource.id === id
           ? { ...resource, pinned: !resource.pinned }
           : resource
@@ -373,7 +403,7 @@ function Opportunity() {
       </div>
 
       <div className="opportunity-grid">
-        {data.opportunityModules.map((resource) => {
+        {(data.opportunityModules || []).map((resource) => {
           const safeUrl = cleanUrl(resource.url);
 
           return (
@@ -521,7 +551,9 @@ function Opportunity() {
           {resumes.length === 0 ? (
             <div className="empty-resume-box">
               <h3>No resumes stored yet</h3>
-              <p>Add a resume file so you can quickly update and access it later.</p>
+              <p>
+                Add a resume file so you can quickly update and access it later.
+              </p>
               <button onClick={() => openResumeModal()}>
                 Add Your First Resume
               </button>
@@ -555,11 +587,16 @@ function Opportunity() {
                       </a>
                     )}
 
-                    {resume.fileData && resume.fileType === "application/pdf" && (
-                      <a href={resume.fileData} target="_blank" rel="noreferrer">
-                        Preview
-                      </a>
-                    )}
+                    {resume.fileData &&
+                      (resume.fileType === "application/pdf" ||
+                        resume.fileName?.toLowerCase().endsWith(".pdf")) && (
+                        <button
+                          type="button"
+                          onClick={() => openResumePreview(resume)}
+                        >
+                          Preview
+                        </button>
+                      )}
 
                     <button onClick={() => openResumeModal(resume)}>
                       Update
