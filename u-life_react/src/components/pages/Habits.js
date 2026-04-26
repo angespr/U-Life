@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import PageStyle from "../main parts/PageStyle";
 import { loadULifeData, saveULifeData } from "../../data/ulifeStore";
 import "../styles/pages/FeaturePages.css";
+import confetti from "canvas-confetti";
 
 function ProgressBar({ value, max }) {
   const percent = Math.min(100, Math.round((value / max) * 100));
@@ -22,7 +23,7 @@ function ProgressBar({ value, max }) {
 function HabitModal({ onClose, onCreate }) {
   const [name, setName] = useState("");
   const [type, setType] = useState("checklist");
-  const [goal, setGoal] = useState("7");
+  const [goal, setGoal] = useState("60");
   const [items, setItems] = useState("");
 
   const submit = (e) => {
@@ -33,7 +34,10 @@ function HabitModal({ onClose, onCreate }) {
       id: `habit-${Date.now()}`,
       name: name.trim(),
       type,
-      goal: Number(goal) || 7,
+      goal:
+        type === "counter"
+          ? Number(goal) || 60
+          : Number(goal) || 7,
       value: 0,
       pinned: false,
       items: items
@@ -86,6 +90,18 @@ function HabitModal({ onClose, onCreate }) {
 function HabitModule({ module, onUpdate, onTogglePin, onDelete }) {
   const [input, setInput] = useState("");
 
+  const isWater = module.name?.toLowerCase().includes("water");
+
+  const isExercise = module.name?.toLowerCase().includes("exercise");
+
+  const fireConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  };
+
   const completed = useMemo(() => {
     if (!module.items) return 0;
     return module.items.filter((item) => item.done).length;
@@ -101,12 +117,25 @@ function HabitModule({ module, onUpdate, onTogglePin, onDelete }) {
   };
 
   const toggleChecklistItem = (id) => {
-    onUpdate({
-      ...module,
-      items: module.items.map((item) =>
-        item.id === id ? { ...item, done: !item.done } : item
-      ),
-    });
+    const updatedItems = module.items.map((item) =>
+      item.id === id ? { ...item, done: !item.done } : item
+    );
+
+    const updated = { ...module, items: updatedItems };
+
+    const wasComplete =
+      module.items?.length > 0 &&
+      module.items.every((item) => item.done);
+
+    const willBeComplete =
+      updatedItems.length > 0 &&
+      updatedItems.every((item) => item.done);
+
+    onUpdate(updated);
+
+    if (!wasComplete && willBeComplete) {
+      fireConfetti();
+    }
   };
 
   const deleteChecklistItem = (id) => {
@@ -142,7 +171,7 @@ function HabitModule({ module, onUpdate, onTogglePin, onDelete }) {
                 className={module.mood === option ? "mood-card selected" : "mood-card"}
                 onClick={() => onUpdate({ ...module, mood: option })}
               >
-                <span>{option === "Good" ? "☺" : option === "Okay" ? "😐" : "☹"}</span>
+                <span>{option === "Good" ? "😀" : option === "Okay" ? "😐" : "🙁"}</span>
                 {option}
               </button>
             ))}
@@ -153,24 +182,120 @@ function HabitModule({ module, onUpdate, onTogglePin, onDelete }) {
       {module.type === "counter" && (
         <>
           <ProgressBar value={module.value || 0} max={module.goal || 1} />
-          <div className="counter-row">
-            <button onClick={() => onUpdate({ ...module, value: Math.max(0, (module.value || 0) - 1) })}>
-              -
-            </button>
+
+    {isExercise && (
+      <p className="exercise-label">
+        🏃‍♀️ {module.value || 0} min / {module.goal || 0} min today
+      </p>
+    )}
+
+    {isWater ? (
+      <div className="water-glasses">
+        {Array.from({ length: module.goal || 8 }).map((_, i) => {
+          const filled = i < (module.value || 0);
+
+          return (
             <button
-              className="wide"
-              onClick={() => onUpdate({ ...module, value: Math.min(module.goal || 1, (module.value || 0) + 1) })}
+              key={i}
+              className={filled ? "glass filled" : "glass"}
+              onClick={() => {
+                const newValue = i + 1;
+
+                const updated = { ...module, value: newValue };
+
+                const wasComplete = (module.value || 0) >= (module.goal || 0);
+                const willBeComplete = newValue >= (module.goal || 0);
+
+                onUpdate(updated);
+
+                if (!wasComplete && willBeComplete) {
+                  fireConfetti();
+                }
+              }}
             >
-              Add Progress
+              {filled ? "🥛" : "🫗"}
             </button>
-            <button onClick={() => onUpdate({ ...module, value: Math.min(module.goal || 1, (module.value || 0) + 1) })}>
-              +
-            </button>
-          </div>
-          <button className="secondary full-button" onClick={() => onUpdate({ ...module, value: 0 })}>
-            Reset
+          );
+        })}
+      </div>
+    ) : (
+      <>
+        <div className="counter-row">
+          <button
+            onClick={() => {
+              const newValue = Math.max(
+                0,
+                (module.value || 0) - (isExercise ? 5 : 1)
+              );
+
+              const updated = { ...module, value: newValue };
+
+              onUpdate(updated);
+            }}
+          >
+            -
           </button>
-        </>
+
+          <button
+            className="wide"
+            onClick={() => {
+              const newValue = Math.min(
+                module.goal || 1,
+                (module.value || 0) + (isExercise ? 5 : 1)
+              );
+
+              const updated = { ...module, value: newValue };
+
+              const wasComplete =
+                (module.value || 0) >= (module.goal || 0);
+              const willBeComplete =
+                newValue >= (module.goal || 0);
+
+              onUpdate(updated);
+
+              if (!wasComplete && willBeComplete) {
+                fireConfetti();
+              }
+            }}
+          >
+            Add Progress
+          </button>
+
+          <button
+            onClick={() => {
+              const newValue = Math.min(
+                module.goal || 1,
+                (module.value || 0) + (isExercise ? 5 : 1)
+              );
+
+              const updated = { ...module, value: newValue };
+
+              const wasComplete =
+                (module.value || 0) >= (module.goal || 0);
+              const willBeComplete =
+                newValue >= (module.goal || 0);
+
+              onUpdate(updated);
+
+              if (!wasComplete && willBeComplete) {
+                fireConfetti();
+              }
+            }}
+          >
+            +
+          </button>
+        </div>
+      </>
+    )}
+
+    {/* Reset */}
+    <button
+      className="secondary full-button"
+      onClick={() => onUpdate({ ...module, value: 0 })}
+    >
+      Reset
+    </button>
+  </>
       )}
 
       {module.type === "checklist" && (

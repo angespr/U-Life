@@ -4,8 +4,31 @@ import "../styles/startup/Homepage.css";
 import Logo from "../../assets/logo.png";
 
 function Homepage() {
+  const emojis = ["📚", "✨", "🎯", "🏃‍♀️", "🧠", "☕"];
+
   return (
     <div className="home-container">
+      <div className="emoji-layer">
+        {Array.from({ length: 25 }).map((_, i) => {
+          const emoji = emojis[i % emojis.length];
+
+          return (
+            <span
+              key={i}
+              className="floating-emoji"
+              style={{
+                left: `${Math.random() * 100}%`,
+                animationDuration: `${8 + Math.random() * 10}s`,
+                fontSize: `${16 + Math.random() * 20}px`,
+                animationDelay: `${Math.random() * 5}s`,
+              }}
+            >
+              {emoji}
+            </span>
+          );
+        })}
+      </div>
+
       <div className="home-card">
         <h2 className="welcome-text">Welcome to:</h2>
 
