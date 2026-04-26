@@ -3,7 +3,7 @@ import PageStyle from "../main parts/PageStyle";
 import { loadULifeData, saveULifeData } from "../../data/ulifeStore";
 import "../styles/pages/FeaturePages.css";
 
-const BACKEND_URL =  process.env.REACT_APP_API_URL || "http://localhost:5000";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 function ModuleModal({ onClose, onCreate }) {
   const [name, setName] = useState("");
@@ -104,7 +104,9 @@ function TaskModule({ module, onUpdate, onTogglePin, onDelete }) {
         <h2>{module.name}</h2>
 
         <div className="card-actions">
-          <span className="small-pill">{completed}/{module.items.length || 0}</span>
+          <span className="small-pill">
+            {completed}/{module.items.length || 0}
+          </span>
 
           <button
             className={module.pinned ? "pin-btn pinned" : "pin-btn"}
@@ -244,7 +246,7 @@ function CalendarModule({ userId }) {
       setError("");
 
       const response = await fetch(
-        `${BACKEND_URL}/api/google/calendar/auth-url?userId=${encodeURIComponent(
+        `${API_URL}/api/google/calendar/auth-url?userId=${encodeURIComponent(
           userId
         )}`
       );
@@ -258,7 +260,9 @@ function CalendarModule({ userId }) {
       window.location.href = data.url;
     } catch (error) {
       console.error("Google Calendar connection failed:", error);
-      setError("Could not connect Google Calendar. Make sure your backend is running.");
+      setError(
+        "Could not connect Google Calendar. Make sure your backend is running."
+      );
     }
   };
 
@@ -268,7 +272,7 @@ function CalendarModule({ userId }) {
       setError("");
 
       const response = await fetch(
-        `${BACKEND_URL}/api/google/calendar/status?userId=${encodeURIComponent(
+        `${API_URL}/api/google/calendar/status?userId=${encodeURIComponent(
           userId
         )}`
       );
@@ -294,7 +298,7 @@ function CalendarModule({ userId }) {
       setError("");
 
       const response = await fetch(
-        `${BACKEND_URL}/api/google/calendar/events?userId=${encodeURIComponent(
+        `${API_URL}/api/google/calendar/events?userId=${encodeURIComponent(
           userId
         )}`
       );
@@ -315,7 +319,9 @@ function CalendarModule({ userId }) {
   };
 
   useEffect(() => {
-    checkCalendarStatus();
+    if (userId) {
+      checkCalendarStatus();
+    }
   }, [userId]);
 
   useEffect(() => {
@@ -438,7 +444,7 @@ function Productivity() {
               onUpdate={updateModule}
               onTogglePin={() => togglePin(module.id)}
               onDelete={() => deleteModule(module.id)}
-          />
+            />
           ))}
 
           <CalendarModule userId={userId} />
@@ -448,10 +454,7 @@ function Productivity() {
       </div>
 
       {showModal && (
-        <ModuleModal
-          onClose={() => setShowModal(false)}
-          onCreate={addModule}
-        />
+        <ModuleModal onClose={() => setShowModal(false)} onCreate={addModule} />
       )}
     </PageStyle>
   );

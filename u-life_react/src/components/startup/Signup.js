@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import "../styles/startup/Login&Signup.css"
-import Logo from "../../assets/logo2.png"
+import "../styles/startup/Login&Signup.css";
+import Logo from "../../assets/logo2.png";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -28,16 +28,15 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        `${API_URL}/api/auth/signup`,
-        formData
-      );
+      const response = await axios.post(`${API_URL}/api/auth/signup`, formData);
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       navigate("/dashboard");
     } catch (error) {
+      console.error("Signup failed:", error);
+
       const backendMessage = error.response?.data?.message;
 
       if (backendMessage === "Email already exists.") {
@@ -51,10 +50,9 @@ function Signup() {
     }
   };
 
-return (
+  return (
     <div className="auth-page">
       <div className="auth-card">
-
         <img src={Logo} alt="Logo" className="auth-logo" />
 
         <h2 className="auth-title">Create Account</h2>
@@ -89,10 +87,9 @@ return (
 
         {message && <p className="auth-message">{message}</p>}
 
-        <p>
+        <p className="auth-switch-text">
           Already have an account? <Link to="/login">Login</Link>
         </p>
-
       </div>
     </div>
   );

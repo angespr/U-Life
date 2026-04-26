@@ -10,30 +10,78 @@ const SCOPES = [
 ];
 
 function getOAuthClient() {
+  const {
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET,
+    GOOGLE_REDIRECT_URI,
+  } = process.env;
+
+  if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !GOOGLE_REDIRECT_URI) {
+    throw new Error("Missing Google OAuth environment variables.");
+  }
+
   return new google.auth.OAuth2(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_CLIENT_SECRET,
-    process.env.GOOGLE_REDIRECT_URI
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET,
+    GOOGLE_REDIRECT_URI
   );
 }
 
-router.get("/auth-url", (req, res) => {
-  const { userId } = req.query;
+async function getAuthorizedClient(userId) {
+  const savedToken = await GoogleCalendarToken.findOne({ userId });
 
-  if (!userId) {
-    return res.status(400).json({ message: "Missing userId" });
+  if (!savedToken) {
+    const error = new Error("Google Calendar is not connected.");
+    error.statusCode = 401;
+    throw error;
   }
 
   const oauth2Client = getOAuthClient();
 
-  const url = oauth2Client.generateAuthUrl({
-    access_type: "offline",
-    prompt: "consent",
-    scope: SCOPES,
-    state: userId,
+  oauth2Client.setCredentials({
+    access_token: savedToken.accessToken,
+    refresh_token: savedToken.refreshToken,
+    expiry_date: savedToken.expiryDate,
   });
 
-  res.json({ url });
+  oauth2Client.on("tokens", async (tokens) => {
+    const update = {};
+
+    if (tokens.access_token) update.accessToken = tokens.access_token;
+    if (tokens.refresh_token) update.refreshToken = tokens.refresh_token;
+    if (tokens.expiry_date) update.expiryDate = tokens.expiry_date;
+
+    if (Object.keys(update).length > 0) {
+      await GoogleCalendarToken.findOneAndUpdate({ userId }, update);
+    }
+  });
+
+  return oauth2Client;
+}
+
+router.get("/auth-url", (req, res) => {
+  try {
+    const { userId } = req.query;
+
+    if (!userId) {
+      return res.status(400).json({ message: "Missing userId." });
+    }
+
+    const oauth2Client = getOAuthClient();
+
+    const url = oauth2Client.generateAuthUrl({
+      access_type: "offline",
+      prompt: "consent",
+      scope: SCOPES,
+      state: userId,
+      include_granted_scopes: true,
+    });
+
+    res.json({ url });
+  } catch (error) {
+    console.error("Google auth-url error:", error);
+    res.status(500).json({ message: error.message });
+  }
 });
 
 router.get("/callback", async (req, res) => {
@@ -74,7 +122,7 @@ router.get("/status", async (req, res) => {
     const { userId } = req.query;
 
     if (!userId) {
-      return res.status(400).json({ message: "Missing userId" });
+      return res.status(400).json({ message: "Missing userId." });
     }
 
     const token = await GoogleCalendarToken.findOne({ userId });
@@ -91,34 +139,10 @@ router.get("/events", async (req, res) => {
     const { userId } = req.query;
 
     if (!userId) {
-      return res.status(400).json({ message: "Missing userId" });
+      return res.status(400).json({ message: "Missing userId." });
     }
 
-    const savedToken = await GoogleCalendarToken.findOne({ userId });
-
-    if (!savedToken) {
-      return res.status(401).json({ message: "Google Calendar is not connected." });
-    }
-
-    const oauth2Client = getOAuthClient();
-
-    oauth2Client.setCredentials({
-      access_token: savedToken.accessToken,
-      refresh_token: savedToken.refreshToken,
-      expiry_date: savedToken.expiryDate,
-    });
-
-    oauth2Client.on("tokens", async (tokens) => {
-      const update = {};
-
-      if (tokens.access_token) update.accessToken = tokens.access_token;
-      if (tokens.refresh_token) update.refreshToken = tokens.refresh_token;
-      if (tokens.expiry_date) update.expiryDate = tokens.expiry_date;
-
-      if (Object.keys(update).length > 0) {
-        await GoogleCalendarToken.findOneAndUpdate({ userId }, update);
-      }
-    });
+    const oauth2Client = await getAuthorizedClient(userId);
 
     const calendar = google.calendar({
       version: "v3",
@@ -136,7 +160,9 @@ router.get("/events", async (req, res) => {
     res.json(response.data.items || []);
   } catch (error) {
     console.error("Google Calendar events error:", error);
-    res.status(500).json({ message: "Failed to load calendar events." });
+    res.status(error.statusCode || 500).json({
+      message: error.message || "Failed to load calendar events.",
+    });
   }
 });
 
@@ -150,19 +176,7 @@ router.post("/events", async (req, res) => {
       });
     }
 
-    const savedToken = await GoogleCalendarToken.findOne({ userId });
-
-    if (!savedToken) {
-      return res.status(401).json({ message: "Google Calendar is not connected." });
-    }
-
-    const oauth2Client = getOAuthClient();
-
-    oauth2Client.setCredentials({
-      access_token: savedToken.accessToken,
-      refresh_token: savedToken.refreshToken,
-      expiry_date: savedToken.expiryDate,
-    });
+    const oauth2Client = await getAuthorizedClient(userId);
 
     const calendar = google.calendar({
       version: "v3",
@@ -188,7 +202,9 @@ router.post("/events", async (req, res) => {
     res.status(201).json(event.data);
   } catch (error) {
     console.error("Create Google Calendar event error:", error);
-    res.status(500).json({ message: "Failed to create calendar event." });
+    res.status(error.statusCode || 500).json({
+      message: error.message || "Failed to create calendar event.",
+    });
   }
 });
 

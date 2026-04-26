@@ -6,7 +6,6 @@ import Logo from "../../assets/logo2.png";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
-
 function Login() {
   const navigate = useNavigate();
 
@@ -29,16 +28,14 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        `${API_URL}/api/auth/login`,
-        formData
-      );
+      const response = await axios.post(`${API_URL}/api/auth/login`, formData);
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       navigate("/dashboard");
     } catch (error) {
+      console.error("Login failed:", error);
       setMessage("Account not found or password is incorrect.");
       setShowSignupButton(true);
     }
@@ -75,10 +72,7 @@ function Login() {
         {message && <p className="auth-message">{message}</p>}
 
         {showSignupButton && (
-          <button
-            onClick={() => navigate("/signup")}
-            className="secondary-btn"
-          >
+          <button onClick={() => navigate("/signup")} className="secondary-btn">
             Create an account
           </button>
         )}
