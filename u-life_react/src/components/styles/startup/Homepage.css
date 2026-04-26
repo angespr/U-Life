@@ -3,14 +3,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-    background: linear-gradient(
+
+  background: linear-gradient(
     270deg,
     #7F9172,
     #669BBC,
     #EF8354
   );
+
   background-size: 600% 600%;
   animation: gradientMove 12s ease infinite;
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 @keyframes gradientMove {
@@ -19,7 +25,38 @@
   100% { background-position: 0% 50%; }
 }
 
+.emoji-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.floating-emoji {
+  position: absolute;
+  bottom: -50px;
+  animation: floatUp linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
 .home-card {
+  position: relative;
+  z-index: 1;
+
   background-color: #151726;
   padding: 100px 90px;
   border-radius: 24px;
@@ -33,7 +70,6 @@
   font-size: 45px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: 600;
-  margin-top: 0px;
   margin-bottom: 15px;
   color: #ffffff;
 }

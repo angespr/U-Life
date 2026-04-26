@@ -3,7 +3,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #7F9172;
+
+  background: linear-gradient(
+    270deg,
+    #7F9172,
+    #669BBC,
+    #EF8354
+  );
+
+  background-size: 600% 600%;
+  animation: gradientMove 12s ease infinite;
+
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .auth-card {
@@ -69,8 +87,25 @@
   background: #EF8354;
 }
 
+.secondary-btn {
+  margin-top: 12px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #ddd;
+  color: #333;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
 .primary-btn:hover,
 .secondary-btn:hover {
   transform: translateY(-2px);
   opacity: 0.9;
+}
+
+.auth-switch-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #333;
 }

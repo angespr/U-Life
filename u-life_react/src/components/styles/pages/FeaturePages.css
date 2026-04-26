@@ -986,3 +986,58 @@
   display: flex;
   gap: 8px;
 }
+
+/*water glass for water intake*/
+.water-glasses {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.glass {
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+  opacity: 0.5;
+}
+
+.glass.filled {
+  opacity: 1;
+}
+
+.glass:hover {
+  transform: scale(1.2);
+}
+
+/* EXCERCISE! */
+.exercise-label {
+  margin-top: 8px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+/* quick add buttons */
+.quick-add-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.quick-add-row button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  background: #eef2ff;
+  color: #4f46e5;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quick-add-row button:hover {
+  background: #e0e7ff;
+}
