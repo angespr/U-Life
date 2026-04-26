@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/auth");
 const googleCalendarRoutes = require("./routes/googleCalendar");
+const interviewRoutes = require("./routes/interviewRoutes");
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/google/calendar", googleCalendarRoutes);
+app.use("/api/interview", interviewRoutes);
 
 app.get("/", (req, res) => {
   res.send("U-Life backend is running.");
@@ -48,6 +50,7 @@ mongoose
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+      console.log(`Interview route: http://localhost:${PORT}/api/interview/questions`);
     });
   })
   .catch((error) => {
