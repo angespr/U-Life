@@ -17,11 +17,41 @@ function getOAuthClient() {
   );
 }
 
+/* router.get("/auth-url", (req, res) => {
+  const { userId } = req.query;
+
+  if (!userId) {
+    return res.status(400).json({ message: "Missing userId" });
+  }
+
+  const oauth2Client = getOAuthClient();
+
+  const url = oauth2Client.generateAuthUrl({
+    access_type: "offline",
+    prompt: "consent",
+    scope: SCOPES,
+    state: userId,
+  });
+
+  res.json({ url });
+});
+*/
+
 router.get("/auth-url", (req, res) => {
   const { userId } = req.query;
 
   if (!userId) {
     return res.status(400).json({ message: "Missing userId" });
+  }
+
+  if (
+    !process.env.GOOGLE_CLIENT_ID ||
+    !process.env.GOOGLE_CLIENT_SECRET ||
+    !process.env.GOOGLE_REDIRECT_URI
+) {
+    return res.status(500).json({
+      message: "Google OAuth environment variables are missing on the backend.",
+    });
   }
 
   const oauth2Client = getOAuthClient();
