@@ -3,9 +3,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-const authRoutes = require("./routes/auth");
-const googleCalendarRoutes = require("./routes/googleCalendar");
-
 const app = express();
 
 app.use(
@@ -13,13 +10,19 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:5173",
-      process.env.FRONTEND_URL
+      "https://angespr.github.io",
+      "https://angespr.github.io/U-Life",
     ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
 app.use(express.json());
+
+const authRoutes = require("./routes/auth");
+const googleCalendarRoutes = require("./routes/googleCalendar");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/google/calendar", googleCalendarRoutes);
@@ -27,6 +30,8 @@ app.use("/api/google/calendar", googleCalendarRoutes);
 app.get("/", (req, res) => {
   res.send("U-Life backend is running.");
 });
+
+console.log("MONGO_URI =", process.env.MONGO_URI);
 
 mongoose
   .connect(process.env.MONGO_URI)
