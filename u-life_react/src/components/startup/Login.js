@@ -23,23 +23,22 @@ function Login() {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/login`,
-        formData
-      );
+  console.log("LOGIN FUNCTION CALLED");
+  console.log("API URL:", process.env.REACT_APP_API_URL);
 
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/auth/login`,
+      formData
+    );
 
-      navigate("/dashboard");
-    } catch (error) {
-      setMessage("Account not found or password is incorrect.");
-      setShowSignupButton(true);
-    }
-  };
+    console.log("LOGIN SUCCESS:", response.data);
+  } catch (error) {
+    console.log("LOGIN ERROR:", error);
+  }
+};
 
   return (
     <div className="auth-page">
