@@ -9,13 +9,17 @@ const googleCalendarRoutes = require("./routes/googleCalendar");
 
 const app = express();
 
+require("dotenv").config();
+
 app.use(
   cors({
     origin: [
       "http://localhost:3000",
       "http://localhost:5173",
-      process.env.FRONTEND_URL
+      "https://angespr.github.io/U-Life",
     ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
