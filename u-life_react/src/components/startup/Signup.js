@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import "../styles/startup/Login&Signup.css"
 import Logo from "../../assets/logo2.png"
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 function Signup() {
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/signup`,
+        `${API_URL}/api/auth/signup`,
         formData
       );
 

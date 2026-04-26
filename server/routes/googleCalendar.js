@@ -62,7 +62,7 @@ router.get("/callback", async (req, res) => {
       { upsert: true, new: true }
     );
 
-    res.redirect(`${process.env.FRONTEND_URL}/productivity?calendar=connected`);
+    res.redirect(`${process.env.FRONTEND_URL}/#/productivity?calendar=connected`);
   } catch (error) {
     console.error("Google Calendar callback error:", error);
     res.status(500).send("Failed to connect Google Calendar.");
