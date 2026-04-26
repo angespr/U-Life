@@ -187,6 +187,13 @@
   font-weight: 700;
 }
 
+.dashboard-website-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+}
+
 @media (max-width: 950px) {
   .module-grid {
     grid-template-columns: 1fr;

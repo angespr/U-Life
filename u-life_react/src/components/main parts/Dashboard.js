@@ -4,6 +4,26 @@ import PageStyle from "./PageStyle";
 import { loadULifeData, saveULifeData } from "../../data/ulifeStore";
 import "../styles/pages/Dashboard.css";
 
+function cleanUrl(url) {
+  const trimmed = (url || "").trim();
+  if (!trimmed) return "";
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
+function getDomain(url) {
+  try {
+    return new URL(cleanUrl(url)).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+function getLogoUrl(url) {
+  const domain = getDomain(url);
+  if (!domain) return "";
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+}
+
 function Dashboard() {
   const navigate = useNavigate();
   const [data, setData] = useState(loadULifeData());
@@ -63,7 +83,8 @@ function Dashboard() {
   };
 
   const openItem = (item) => {
-    if (activeTab === "opportunities") window.open(item.url, "_blank");
+    if (activeTab === "opportunities" && item.url) window.open(cleanUrl(item.url), "_blank");
+    else if (activeTab === "opportunities") navigate(activePath);
     else if (activeTab === "finances") navigate(`/finances?group=${item.id}`);
     else navigate(activePath);
   };
@@ -101,7 +122,19 @@ function Dashboard() {
             <article key={item.id} className="module-card">
               <div className="module-card-top">
                 <button className="module-click-area" onClick={() => openItem(item)}>
-                  <div className="module-icon">{activeTab === "finances" ? "$" : "📌"}</div>
+                  <div className="module-icon">
+                    {activeTab === "opportunities" && item.url ? (
+                      <img
+                        src={getLogoUrl(item.url)}
+                        alt={`${item.name} logo`}
+                        className="dashboard-website-logo"
+                      />
+                    ) : activeTab === "finances" ? (
+                      "$"
+                    ) : (
+                      "📌"
+                    )}
+                  </div>
                   <h3>{item.name}</h3>
                   <p>
                     {activeTab === "productivity" && `${item.items?.length || 0} checklist item(s)`}

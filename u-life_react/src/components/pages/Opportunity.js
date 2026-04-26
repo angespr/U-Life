@@ -3,6 +3,49 @@ import PageStyle from "../main parts/PageStyle";
 import { loadULifeData, saveULifeData } from "../../data/ulifeStore";
 import "../styles/pages/FeaturePages.css";
 
+function cleanUrl(url) {
+  const trimmed = (url || "").trim();
+  if (!trimmed) return "";
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
+function getDomain(url) {
+  try {
+    return new URL(cleanUrl(url)).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+function getLogoUrl(url) {
+  const domain = getDomain(url);
+  if (!domain) return "";
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+}
+
+function ResourceLogo({ resource }) {
+  const logo = getLogoUrl(resource.url);
+
+  if (!logo) {
+    return <div className="resource-icon default-resource-icon">{resource.icon || "★"}</div>;
+  }
+
+  return (
+    <div className="resource-icon website-logo-wrap">
+      <img
+        src={logo}
+        alt={`${resource.name} logo`}
+        className="website-logo"
+        onError={(e) => {
+          e.currentTarget.style.display = "none";
+          e.currentTarget.parentElement.classList.add("logo-fallback");
+          e.currentTarget.parentElement.textContent = resource.icon || "★";
+        }}
+      />
+    </div>
+  );
+}
+
 function OpportunityModal({ onClose, onCreate }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -17,13 +60,19 @@ function OpportunityModal({ onClose, onCreate }) {
       id: `opportunity-${Date.now()}`,
       name: name.trim(),
       description: description.trim() || "Custom opportunity resource",
-      url: url.trim() || "https://www.google.com",
+      url: cleanUrl(url),
       stat: stat.trim() || "User-added resource",
       icon: "★",
       pinned: false,
     });
 
     onClose();
+  };
+
+  const previewResource = {
+    name: name.trim() || "New resource",
+    url,
+    icon: "★",
   };
 
   return (
@@ -34,14 +83,26 @@ function OpportunityModal({ onClose, onCreate }) {
           <button type="button" onClick={onClose}>×</button>
         </div>
 
+        <div className="logo-preview-row">
+          <ResourceLogo resource={previewResource} />
+          <div>
+            <strong>Logo Preview</strong>
+            <p>{url.trim() ? getDomain(url) : "No website yet — using default star"}</p>
+          </div>
+        </div>
+
         <label>Resource / job name</label>
         <input value={name} onChange={(e) => setName(e.target.value)} />
 
         <label>Description</label>
         <input value={description} onChange={(e) => setDescription(e.target.value)} />
 
-        <label>URL</label>
-        <input value={url} placeholder="https://..." onChange={(e) => setUrl(e.target.value)} />
+        <label>Website URL optional</label>
+        <input
+          value={url}
+          placeholder="linkedin.com, https://indeed.com, or leave blank"
+          onChange={(e) => setUrl(e.target.value)}
+        />
 
         <label>Status / quick stat</label>
         <input value={stat} onChange={(e) => setStat(e.target.value)} />
@@ -114,40 +175,50 @@ function Opportunity() {
       </div>
 
       <div className="opportunity-grid">
-        {data.opportunityModules.map((resource) => (
-          <article key={resource.id} className="opportunity-card">
-            <div className="opportunity-top">
-              <a href={resource.url} target="_blank" rel="noreferrer" className="resource-main-link">
-                <div className="resource-icon">{resource.icon}</div>
-              </a>
+        {data.opportunityModules.map((resource) => {
+          const safeUrl = cleanUrl(resource.url);
 
-              <div className="card-actions">
-                <button
-                  className={resource.pinned ? "pin-btn pinned" : "pin-btn"}
-                  onClick={() => togglePin(resource.id)}
-                >
-                  {resource.pinned ? "📌" : "📍"}
-                </button>
-                
-                <button
-                  className="delete-module-btn"
-                  onClick={() => deleteResource(resource.id)}
-                >
-                  ×
-                </button>
+          return (
+            <article key={resource.id} className="opportunity-card">
+              <div className="opportunity-top">
+                {safeUrl ? (
+                  <a href={safeUrl} target="_blank" rel="noreferrer" className="resource-main-link">
+                    <ResourceLogo resource={resource} />
+                  </a>
+                ) : (
+                  <ResourceLogo resource={resource} />
+                )}
 
-                <a href={resource.url} target="_blank" rel="noreferrer" className="external-icon">
-                  ↗
-                </a>
+                <div className="card-actions">
+                  <button
+                    className={resource.pinned ? "pin-btn pinned" : "pin-btn"}
+                    onClick={() => togglePin(resource.id)}
+                  >
+                    {resource.pinned ? "📌" : "📍"}
+                  </button>
+
+                  <button
+                    className="delete-module-btn"
+                    onClick={() => deleteResource(resource.id)}
+                  >
+                    ×
+                  </button>
+
+                  {safeUrl && (
+                    <a href={safeUrl} target="_blank" rel="noreferrer" className="external-icon">
+                      ↗
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <h2>{resource.name}</h2>
-            <p>{resource.description}</p>
-            <div className="divider" />
-            <span className="resource-stat">{resource.stat}</span>
-          </article>
-        ))}
+              <h2>{resource.name}</h2>
+              <p>{resource.description}</p>
+              <div className="divider" />
+              <span className="resource-stat">{resource.stat}</span>
+            </article>
+          );
+        })}
       </div>
 
       <section className="quick-actions">
