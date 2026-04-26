@@ -1263,3 +1263,60 @@
 .feature-card {
   margin-bottom: 28px;
 }
+
+/* ===== Interview Input Row ===== */
+.interview-input-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* ===== Input Styling (clean + consistent) ===== */
+.interview-input-row input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #d9dee8;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.interview-input-row input:focus {
+  border-color: #669bbc;
+  box-shadow: 0 0 0 2px rgba(102, 155, 188, 0.15);
+}
+
+/* ===== Button (MAIN FIX) ===== */
+.interview-input-row button {
+  border: none;
+  background: #669bbc;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.interview-input-row button:hover {
+  background: #5a8fb0;
+  transform: translateY(-1px);
+}
+
+/* Click effect */
+.interview-input-row button:active {
+  transform: scale(0.97);
+}
+
+/* Disabled / loading state */
+.interview-input-row button:disabled {
+  background: #c5ccd6;
+  cursor: not-allowed;
+  transform: none;
+}

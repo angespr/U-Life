@@ -439,8 +439,8 @@ function Opportunity() {
                 onChange={(e) => setJobTitle(e.target.value)}
               />
 
-              <button onClick={getInterviewQuestions}>
-                {loadingQuestions ? "Loading..." : "Get Questions"}
+              <button onClick={getInterviewQuestions} disabled={loadingQuestions}>
+                {loadingQuestions ? "Generating..." : "Get Questions"}
               </button>
             </div>
 
