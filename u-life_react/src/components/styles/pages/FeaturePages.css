@@ -1038,3 +1038,224 @@
   color: #4d5568;
   font-size: 14px;
 }
+
+.website-logo-wrap {
+  overflow: hidden;
+  background: #f5f7fb;
+}
+
+.website-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  display: block;
+}
+
+.default-resource-icon,
+.logo-fallback {
+  background: #d9e7ff;
+  color: #356aff;
+}
+
+.logo-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f8f9fb;
+  border: 1px solid #e3e6ec;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.logo-preview-row p {
+  margin: 4px 0 0;
+  color: #4d5568;
+  font-size: 14px;
+}
+
+.clickable-card {
+  border: 1px solid #e3e6ec;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.clickable-card:hover {
+  transform: translateY(-3px);
+  border-color: #669bbc;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.section-header-row h2 {
+  margin-bottom: 4px;
+}
+
+.section-header-row p {
+  margin: 0;
+  color: #4d5568;
+}
+
+.small-add-btn {
+  border: none;
+  background: #669bbc;
+  color: white;
+  padding: 11px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.empty-resume-box {
+  border: 2px dashed #cfd5df;
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  background: #fafbfc;
+}
+
+.empty-resume-box h3 {
+  margin-top: 0;
+}
+
+.empty-resume-box p {
+  color: #4d5568;
+}
+
+.empty-resume-box button {
+  border: none;
+  background: #669bbc;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.resume-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.resume-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid #e3e6ec;
+  border-radius: 14px;
+  padding: 18px;
+  background: #ffffff;
+}
+
+.resume-row h3 {
+  margin: 0 0 6px;
+}
+
+.resume-row p {
+  margin: 0;
+  color: #4d5568;
+}
+
+.resume-notes {
+  margin-top: 8px !important;
+  color: #151726 !important;
+}
+
+.resume-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resume-actions a,
+.resume-actions button {
+  border: none;
+  background: #edf4f8;
+  color: #151726;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.resume-actions .danger-btn {
+  background: #fff2ec;
+  color: #ef8354;
+}
+
+.module-modal textarea {
+  min-height: 90px;
+  resize: vertical;
+  border: 1px solid #d9dee8;
+  border-radius: 10px;
+  padding: 12px;
+  font-family: inherit;
+}
+
+@media (max-width: 800px) {
+  .resume-row,
+  .section-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .resume-actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* Ensure EVERYTHING uses your app font */
+.quick-action-card,
+.quick-action-card *,
+
+.module-modal,
+.module-modal *,
+
+.resume-row,
+.resume-row *,
+
+.resume-actions button,
+.resume-actions a,
+
+.module-modal input,
+.module-modal textarea,
+.module-modal button {
+  font-family: inherit;
+}
+
+/* Fix Quick Actions typography to match rest of app */
+
+.quick-action-card {
+  font-family: inherit;
+  text-align: left;
+}
+
+/* Title (matches Opportunity cards h2) */
+.quick-action-card h3 {
+  font-size: 20px;        /* match your other card titles */
+  font-weight: 700;
+  color: #151726;
+  margin: 0 0 6px;
+}
+
+/* Description (matches other card p text) */
+.quick-action-card p {
+  font-size: 15px;
+  color: #4d5568;
+  margin: 0;
+}
+
+/* Add spacing between major sections */
+.feature-card {
+  margin-bottom: 28px;
+}
