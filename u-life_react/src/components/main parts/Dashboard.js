@@ -9,6 +9,11 @@ function Dashboard() {
   const [data, setData] = useState(loadULifeData());
   const [activeTab, setActiveTab] = useState("productivity");
 
+  const emojis = ["🔥", "🧠", "⚡", "📚"];
+  const [emojiIndex, setEmojiIndex] = useState(
+    data.dashboardEmojiIndex || 0
+  );
+
   useEffect(() => {
     const update = () => setData(loadULifeData());
     window.addEventListener("ulifeDataUpdated", update);
@@ -30,6 +35,18 @@ function Dashboard() {
   }, [activeTab, data]);
 
   const activePath = tabs.find((tab) => tab.id === activeTab)?.path || "/dashboard";
+
+  const saveEmoji = (index) => {
+    const updated = { ...data, dashboardEmojiIndex: index };
+    saveULifeData(updated);
+    setData(updated);
+    setEmojiIndex(index);
+  };
+
+  const cycleEmoji = () => {
+    const next = (emojiIndex + 1) % emojis.length;
+    saveEmoji(next);
+  };
 
   const removePin = (id) => {
     let updated = { ...data };
@@ -71,9 +88,18 @@ function Dashboard() {
   return (
     <PageStyle>
       <section className="dashboard-hero ombre-panel">
-        <p className="eyebrow">Welcome back</p>
-        <h1>Main Dashboard</h1>
-        <p>Your central hub for productivity, opportunities, habits, and shared student finances.</p>
+        <p className="eyebrow">Welcome to your</p>
+
+        <h1>
+          Main Dashboard{" "}
+          <span className="dashboard-emoji" onClick={cycleEmoji}>
+            {emojis[emojiIndex]}
+          </span>
+        </h1>
+
+        <p>
+          Your central hub for productivity, opportunities, habits, and shared student finances.
+        </p>
       </section>
 
       <section className="dashboard-section">
