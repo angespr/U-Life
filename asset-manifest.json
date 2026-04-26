@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/U-Life/static/css/main.091364bd.css",
-    "main.js": "/U-Life/static/js/main.feca2148.js",
+    "main.css": "/U-Life/static/css/main.9db304a5.css",
+    "main.js": "/U-Life/static/js/main.1d66a2fa.js",
     "static/js/453.25f6144e.chunk.js": "/U-Life/static/js/453.25f6144e.chunk.js",
     "static/media/logo.png": "/U-Life/static/media/logo.4c959731846482b5d68a.png",
     "static/media/logo2.png": "/U-Life/static/media/logo2.6398d1df8d7fdf169f86.png",
     "index.html": "/U-Life/index.html",
-    "main.091364bd.css.map": "/U-Life/static/css/main.091364bd.css.map",
-    "main.feca2148.js.map": "/U-Life/static/js/main.feca2148.js.map",
+    "main.9db304a5.css.map": "/U-Life/static/css/main.9db304a5.css.map",
+    "main.1d66a2fa.js.map": "/U-Life/static/js/main.1d66a2fa.js.map",
     "453.25f6144e.chunk.js.map": "/U-Life/static/js/453.25f6144e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.091364bd.css",
-    "static/js/main.feca2148.js"
+    "static/css/main.9db304a5.css",
+    "static/js/main.1d66a2fa.js"
   ]
 }
