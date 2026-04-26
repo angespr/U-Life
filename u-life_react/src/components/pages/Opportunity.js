@@ -84,14 +84,20 @@ function OpportunityModal({ onClose, onCreate }) {
       <form className="module-modal" onSubmit={submit}>
         <div className="modal-header">
           <h2>Add Opportunity Resource</h2>
-          <button type="button" onClick={onClose}>×</button>
+          <button type="button" onClick={onClose}>
+            ×
+          </button>
         </div>
 
         <div className="logo-preview-row">
           <ResourceLogo resource={previewResource} />
           <div>
             <strong>Logo Preview</strong>
-            <p>{url.trim() ? getDomain(url) : "No website yet — using default star"}</p>
+            <p>
+              {url.trim()
+                ? getDomain(url)
+                : "No website yet — using default star"}
+            </p>
           </div>
         </div>
 
@@ -99,7 +105,10 @@ function OpportunityModal({ onClose, onCreate }) {
         <input value={name} onChange={(e) => setName(e.target.value)} />
 
         <label>Description</label>
-        <input value={description} onChange={(e) => setDescription(e.target.value)} />
+        <input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
         <label>Website URL optional</label>
         <input
@@ -162,7 +171,9 @@ function ResumeModal({ resume, onClose, onSave }) {
       <form className="module-modal" onSubmit={submit}>
         <div className="modal-header">
           <h2>{resume ? "Update Resume" : "Add Resume"}</h2>
-          <button type="button" onClick={onClose}>×</button>
+          <button type="button" onClick={onClose}>
+            ×
+          </button>
         </div>
 
         <label>Resume name</label>
@@ -180,7 +191,11 @@ function ResumeModal({ resume, onClose, onSave }) {
         />
 
         <label>Upload resume file</label>
-        <input type="file" accept=".pdf,.doc,.docx" onChange={handleFileUpload} />
+        <input
+          type="file"
+          accept=".pdf,.doc,.docx"
+          onChange={handleFileUpload}
+        />
 
         {fileName && (
           <p className="uploaded-file-name">
@@ -209,6 +224,7 @@ function Opportunity() {
   const [showModal, setShowModal] = useState(false);
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [showResumeLibrary, setShowResumeLibrary] = useState(false);
+  const [showInterviewBox, setShowInterviewBox] = useState(false);
   const [editingResume, setEditingResume] = useState(null);
 
   const [jobTitle, setJobTitle] = useState("");
@@ -323,7 +339,10 @@ function Opportunity() {
         result = JSON.parse(text);
       } catch {
         throw new Error(
-          `Backend did not return JSON. Status: ${response.status}. Response: ${text.slice(0, 80)}`
+          `Backend did not return JSON. Status: ${response.status}. Response: ${text.slice(
+            0,
+            80
+          )}`
         );
       }
 
@@ -428,24 +447,17 @@ function Opportunity() {
             </p>
           </button>
 
-          <div className="quick-action-card interview-card">
+          <button
+            className="quick-action-card clickable-card"
+            onClick={() => setShowInterviewBox((prev) => !prev)}
+          >
             <h3>Practice Interview</h3>
-            <p>Generate 5 questions for a specific role.</p>
-
-            <div className="interview-input-row">
-              <input
-                value={jobTitle}
-                placeholder="Software Engineering Intern"
-                onChange={(e) => setJobTitle(e.target.value)}
-              />
-
-              <button onClick={getInterviewQuestions} disabled={loadingQuestions}>
-                {loadingQuestions ? "Generating..." : "Get Questions"}
-              </button>
-            </div>
-
-            {questionError && <p className="question-error">{questionError}</p>}
-          </div>
+            <p>
+              {interviewQuestions.length > 0
+                ? `${interviewQuestions.length} question(s) ready`
+                : "Generate role-specific interview questions"}
+            </p>
+          </button>
 
           <div className="quick-action-card">
             <h3>Network Events</h3>
@@ -454,18 +466,42 @@ function Opportunity() {
         </div>
       </section>
 
-      {interviewQuestions.length > 0 && (
-        <section className="feature-card full-width">
-          <h2>Practice Interview Questions</h2>
-
-          <div className="question-list">
-            {interviewQuestions.map((question, index) => (
-              <div key={index} className="question-card">
-                <span>Question {index + 1}</span>
-                <p>{question}</p>
-              </div>
-            ))}
+      {showInterviewBox && (
+        <section className="feature-card full-width interview-panel">
+          <div className="section-header-row">
+            <div>
+              <h2>Practice Interview</h2>
+              <p>Enter a role and generate 5 realistic practice questions.</p>
+            </div>
           </div>
+
+          <div className="interview-generator-box">
+            <input
+              value={jobTitle}
+              placeholder="Software Engineering Intern"
+              onChange={(e) => setJobTitle(e.target.value)}
+            />
+
+            <button onClick={getInterviewQuestions} disabled={loadingQuestions}>
+              {loadingQuestions ? "Generating..." : "Generate Questions"}
+            </button>
+          </div>
+
+          {questionError && <p className="question-error">{questionError}</p>}
+
+          {interviewQuestions.length > 0 && (
+            <div className="question-list professional-question-list">
+              {interviewQuestions.map((question, index) => (
+                <div
+                  key={index}
+                  className="question-card professional-question-card"
+                >
+                  <div className="question-number">Question {index + 1}</div>
+                  <p>{question}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       )}
 
