@@ -1227,17 +1227,23 @@ function Opportunity() {
             </div>
           </div>
 
-          <div className="interview-generator-box">
+          <form
+            className="interview-generator-box"
+            onSubmit={(e) => {
+              e.preventDefault();
+              getInterviewQuestions();
+            }}
+          >
             <input
               value={jobTitle}
               placeholder="Software Engineering Intern"
               onChange={(e) => setJobTitle(e.target.value)}
             />
 
-            <button onClick={getInterviewQuestions} disabled={loadingQuestions}>
+            <button type="submit" disabled={loadingQuestions}>
               {loadingQuestions ? "Generating..." : "Generate Questions"}
             </button>
-          </div>
+          </form>
 
           {questionError && <p className="question-error">{questionError}</p>}
 
@@ -1266,17 +1272,23 @@ function Opportunity() {
             </div>
           </div>
 
-          <div className="event-generator-box">
+          <form
+            className="interview-generator-box"
+            onSubmit={(e) => {
+              e.preventDefault();
+              getNetworkEvents();
+            }}
+          >
             <input
-              value={eventPrompt}
               placeholder="Tech networking events in Seattle this month"
+              value={eventPrompt}
               onChange={(e) => setEventPrompt(e.target.value)}
             />
 
-            <button onClick={getNetworkEvents} disabled={loadingEvents}>
+            <button type="submit" disabled={loadingEvents}>
               {loadingEvents ? "Searching..." : "Search Events"}
             </button>
-          </div>
+          </form>
 
           {eventError && <p className="question-error">{eventError}</p>}
 
