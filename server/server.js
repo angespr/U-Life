@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
+require("dotenv").config({ path: ".env" });
+console.log("MONGO_URI =", process.env.MONGO_URI); //debug for mongodb
 
 const authRoutes = require("./routes/auth");
 const googleCalendarRoutes = require("./routes/googleCalendar");
